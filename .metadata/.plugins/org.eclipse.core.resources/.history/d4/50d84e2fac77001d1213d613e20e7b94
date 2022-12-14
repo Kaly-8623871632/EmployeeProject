@@ -1,0 +1,24 @@
+package com.boot.service;
+
+import java.util.List;
+
+
+import com.boot.payload.ProjectDTO;
+
+
+
+public interface ProjectService
+{
+	
+	 public ProjectDTO addProject(ProjectDTO project);
+		
+		public List<ProjectDTO> getAllProject();
+		
+		public  ProjectDTO getProjectById(int projectId);
+	
+		public  List<ProjectDTO> getProjectBydepartmentId(int departmentId);
+		
+		public List<ProjectDTO> getProjectByEmployeeId(int employeeId);
+		
+
+}

@@ -1,0 +1,47 @@
+package com.boot.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Entity
+@Table(name="allocateproject")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class AllocateProjectEntity {
+	
+	
+	@Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+	 private int AllocateProjectId;
+	 
+	
+	 @NotEmpty( message=" AllocateProject status can not be empty")
+     @Column(nullable=false)
+     @Size(min=10,max=20,message="AllocateProject status must be minimum 10 characters and maximum 20")
+	 private String status;
+
+	 @ManyToOne
+	 @JoinColumn(name= "pid")
+	 private ProjectEntity project;
+	 
+	 
+}

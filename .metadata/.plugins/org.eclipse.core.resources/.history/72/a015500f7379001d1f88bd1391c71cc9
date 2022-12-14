@@ -1,0 +1,102 @@
+package com.boot.entity;
+
+import java.sql.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import java.util.*;
+
+
+@Entity
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class EmployeeEntity 
+{
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+    private int employeeId;
+	
+	
+	@NotEmpty(message="Employee name can not be empty")
+	@Column(nullable = false)
+	@Size(min=1,max=10,message ="Employee  name must be minimum 1 charachters and maximum 10")
+	private String employeeName;
+	
+	@NotNull(message ="Address is not valid ")
+	@NotEmpty(message = "Address can not be empty")
+    @Column(nullable=false)
+    private String employeeAddress;
+	
+	
+	@NotEmpty(message="Employee salary can not be empty")
+	@Column(nullable = false)
+	@Size(min=1,max=10,message ="Employee salary must be minimum 10k digit and maximum 80k")
+	private int employeeSalary;
+	
+	@Column(nullable=false)
+    @NotNull(message ="Employee gender can not be empty")
+    private String employeeGender;
+
+	
+	@Column(nullable=false)
+    @NotNull(message ="Employee Contact Number can not be empty")
+    private long employeeContactNumber;
+	
+	@Email(message ="Email is not valid")
+    @NotEmpty(message ="Email can not be empty")
+    @Column(nullable=false)
+	 private String employeeEmail;
+	 
+	
+	
+    @NotNull(message="Employee Password can not be empty")
+    @Column(nullable=false)
+    @Size(min=2,max=10,message="Employee Password must be minimum 2 characters and maximum 10")
+	 private String password;
+	
+    
+	    
+	@Column(nullable=false)
+    @NotNull(message ="Employee DateOfBirth can not be empty")
+	private Date employeeDOB;
+   
+	@Column(nullable=false)
+    @NotNull(message ="Employee DateOfJoin can not be empty")
+	private Date employeeDateOfJoin;
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "did")
+	private DepartmentEntity department;
+	
+	
+	
+	
+	
+	@OneToMany(mappedBy = "employee",cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<AllocateProjectEntity> allocateProjectList = new ArrayList<>();
+
+}

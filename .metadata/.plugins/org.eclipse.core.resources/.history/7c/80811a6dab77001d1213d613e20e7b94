@@ -1,0 +1,58 @@
+package com.boot.serviceimplementation;
+
+import java.util.List;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.boot.entity.ProjectEntity;
+import com.boot.payload.ProjectDTO;
+import com.boot.repository.ProjectRepository;
+import com.boot.service.ProjectService;
+
+
+
+@Service
+public class ProjectServiceImplementation  implements ProjectService
+{
+
+	@Autowired
+	private ProjectRepository projectRepository;
+	
+	@Autowired
+	private ModelMapper modelMapper;
+
+	@Override
+	public ProjectDTO addProject(ProjectDTO project) {
+		ProjectEntity projectEntity= this.modelMapper.map(project, ProjectEntity.class);
+		ProjectEntity savedProject =this.projectRepository.save(projectEntity);
+	 	
+		return this.modelMapper.map(savedProject, ProjectDTO.class);
+	}
+
+	@Override
+	public List<ProjectDTO> getAllProject() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ProjectDTO getProjectById(int projectId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProjectDTO> getProjectBydepartmentId(int departmentId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProjectDTO> getProjectByEmployeeId(int employeeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+}

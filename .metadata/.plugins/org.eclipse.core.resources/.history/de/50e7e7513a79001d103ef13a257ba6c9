@@ -1,0 +1,27 @@
+package com.boot.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.boot.entity.DepartmentEntity;
+import com.boot.entity.ProjectEntity;
+
+
+
+public interface ProjectRepository  extends JpaRepository<ProjectEntity,Integer>{
+
+	
+	
+	// List<ProjectEntity> findByDepartment(DepartmentEntity department);
+	 
+	 
+     @Query(value="select * from project_entity pe where pe.did=:departmentId",nativeQuery =true)
+     List<ProjectEntity> getAllProjectByDepartmentId(@Param("departmentId") int departmenttId);
+	
+     @Query(value="select * from project_entity pe where pe.eid=:employeeId",nativeQuery =true)
+     List<ProjectEntity> getAllProjectByEmployeeId(@Param("employeeId") int employeeId);
+
+}

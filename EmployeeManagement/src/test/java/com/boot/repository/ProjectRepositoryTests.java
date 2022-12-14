@@ -1,0 +1,44 @@
+package com.boot.repository;
+
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.boot.entity.ProjectEntity;
+
+
+
+public class ProjectRepositoryTests {
+
+	
+	@Autowired
+	private ProjectRepository projectRepository;
+	
+	//given_when_then->BDD PATTERN 
+	
+	@Test
+	@DisplayName("JUNIT testfor save student operation")
+	public void givenProjectObject_whenSaveProject_thenReturnedSavedProject()
+	{
+		//given -precondition or setup
+		ProjectEntity project= ProjectEntity .builder()
+				                                      .projectName("System management")
+				                                   //   .startDate("2019-08-9-10")
+				                                   //   .endDate(null)
+				                                      .projectStatus("InProgress")
+				                                      .build();
+		
+		//when-action or behaviour that we are going to test
+		ProjectEntity savedProject = this.projectRepository.save(project);
+		
+		//then-verify the output
+		Assertions.assertThat(savedProject).isNotNull();
+		Assertions.assertThat(savedProject.getProjectId()).isGreaterThan(0);
+		
+	}	
+	
+	
+	
+	
+}

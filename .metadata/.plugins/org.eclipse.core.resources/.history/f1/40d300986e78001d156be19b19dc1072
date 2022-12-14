@@ -1,0 +1,154 @@
+package com.boot.serviceimplementation;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.boot.entity.ProjectEntity;
+import com.boot.exception.ResourceNotFoundException;
+import com.boot.payload.ProjectDTO;
+import com.boot.repository.DepartmentRepository;
+import com.boot.repository.EmployeeRepository;
+import com.boot.repository.ProjectRepository;
+import com.boot.service.ProjectService;
+
+
+
+@Service
+public class ProjectServiceImplementation  implements ProjectService
+{
+	@Autowired
+	private ProjectRepository projectRepository;  
+	
+	@Autowired
+	private ModelMapper modelMapper;
+
+	@Override
+	public ProjectDTO addProject(ProjectDTO project)
+	{
+	 	ProjectEntity projectEntity= this.modelMapper.map(project, ProjectEntity.class);
+		ProjectEntity savedProject =this.projectRepository.save(projectEntity);
+	 	
+		return this.modelMapper.map(savedProject, ProjectDTO.class);
+}
+
+	@Override
+	public List<ProjectDTO> getAllProject() {
+		
+		List<ProjectEntity> projectList = this.projectRepository.findAll();
+		List<ProjectDTO>  projectDTOList = projectList.stream().map(project->this.
+				modelMapper.map(project, ProjectDTO.class))
+				.collect(Collectors.toList());
+		return projectDTOList;
+	
+	}
+
+	@Override
+	public ProjectDTO getProjectById(int projectId) {
+      
+		
+		if(this.projectRepository.existsById(projectId)) 
+		{
+			ProjectEntity projectEntity = this.projectRepository.findById(projectId).get();
+			
+			return this.modelMapper.map(projectEntity, ProjectDTO.class);
+		}
+		else
+		{
+			throw new ResourceNotFoundException("project","ProjectId", projectId);
+		}
+
+	}
+
+	@Override
+	public List<ProjectDTO> getProjectByDepartmentId(int departmentId) 
+	{
+
+      
+		  if(this.departmentRepository.existsById(departmentId))
+		    {
+		    	//DepartmentEntity updatedDepartment=this.departmentRepository.save(departmentObj).get();
+		    	List<ProjectEntity> projectList =this.projectRepository.getAllProjectByDepartmentId(departmentId);
+		    	 
+		    	List<ProjectDTO> projectDTOList =projectList.stream()
+		    	   .map(project ->this.modelMapper.map(project, ProjectDTO.class))
+		    	   .collect(Collectors.toList());
+		    	
+		    	
+		    	return projectDTOList;
+		    	
+		    	
+		    	}
+		    else
+		    {
+		    	throw new ResourceNotFoundException("Department","DepartmentID",departmentId);
+		    }
+		
+		//return null;
+	}
+
+	@Override
+	public List<ProjectDTO> getProjectByEmployeeId(int employeeId) {
+		
+		
+		if(this.employeeRepository.existsById(employeeId))
+		{
+		// TODO Auto-generated method stub
+		List<ProjectEntity> projectList =this.projectRepository.getAllProjectByEmployeeId(employeeId);   	 
+   	List<ProjectDTO> projectDTOList =projectList.stream()
+   	   .map(project ->this.modelMapper.map(project, ProjectDTO.class))
+   	   .collect(Collectors.toList());
+   	
+   	
+   	return projectDTOList;
+   	
+   	
+   	}
+   else
+   {
+   	throw new ResourceNotFoundException("Employee","EmployeeID",employeeId);
+   }
+	}
+
+	@Override
+	public List<ProjectDTO> getProjectById(int departmentId) {
+		if(this.departmentRepository.existsById(departmentId))
+	    {
+	    	//DepartmentEntity updatedDepartment=this.departmentRepository.save(departmentObj).get();
+	    	List<ProjectEntity> projectList =this.projectRepository.getAllProjectByDepartmentId(departmentId);
+	    	 
+	    	List<ProjectDTO> projectDTOList =projectList.stream()
+	    	   .map(project ->this.modelMapper.map(project, ProjectDTO.class))
+	    	   .collect(Collectors.toList());
+	    	
+	    	
+	    	return projectDTOList;
+	    	
+	    	
+	    	}
+	    else
+	    {
+	    	throw new ResourceNotFoundException("Department","DepartmentID",departmentId);
+	    }
+	
+	//return null;
+	}
+
+	@Override
+	public void deleteProjectById(int projectId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ProjectDTO updateProjectById(ProjectDTO project, int projectId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	
+}

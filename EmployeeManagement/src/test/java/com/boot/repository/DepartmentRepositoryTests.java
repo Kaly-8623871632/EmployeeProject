@@ -1,0 +1,38 @@
+package com.boot.repository;
+
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.boot.entity.DepartmentEntity;
+
+
+
+public class DepartmentRepositoryTests {
+
+	
+	@Autowired
+	private DepartmentRepository departmentRepository;
+	
+	//given_when_then->BDD PATTERN 
+	
+	@Test
+	@DisplayName("JUNIT testfor save student operation")
+	public void givenDepartmentObject_whenSaveDepartment_thenReturnedSavedDepartment()
+	{
+		//given -precondition or setup
+		DepartmentEntity department= DepartmentEntity .builder()
+				                                      .departmentName("MCA")
+				                                      
+				                                      .build();
+		
+		//when-action or behaviour that we are going to test
+		DepartmentEntity savedDepartment = this.departmentRepository.save(department);
+		
+		//then-verify the output
+		Assertions.assertThat(savedDepartment).isNotNull();
+		Assertions.assertThat(savedDepartment.getDepartmentId()).isGreaterThan(0);
+		
+	}	
+}

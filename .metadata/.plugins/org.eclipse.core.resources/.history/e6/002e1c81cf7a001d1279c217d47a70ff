@@ -1,0 +1,42 @@
+package com.boot.repository;
+
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.boot.entity.EmployeeEntity;
+
+
+
+public class EmployeeRepositotyTests {
+
+	
+	
+	@Autowired
+	private EmployeeRepository employeeRepository;
+	
+	//given_when_then->BDD PATTERN 
+	
+	@Test
+	@DisplayName("JUNIT testfor save student operation")
+	public void givenEmployeeObject_whenSaveEmployee_thenReturnedSavedEmployee()
+	{
+		//given -precondition or setup
+		EmployeeEntity employee= EmployeeEntity .builder()
+				                                      .studentName("kalyani")
+				                                      .studentAge(22)
+				                                      .studentClass("MCA")
+				                                      .studentEmail("kalyani@gmail.com")
+				                                      .build();
+		
+		//when-action or behaviour that we are going to test
+		StudentEntity savedStudent = this.studentRepository.save(student);
+		
+		//then-verify the output
+		Assertions.assertThat(savedStudent).isNotNull();
+		Assertions.assertThat(savedStudent.getStudentId()).isGreaterThan(0);
+		
+	}	
+	}           
+}
